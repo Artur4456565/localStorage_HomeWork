@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalStorage_Artur</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="form-container">
+        <form id="registrationForm">
+            <h2>Регистрация</h2>
+
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Пароль:</label>
+            <div class="password-container">
+                <input type="password" id="password" name="password" required>
+                <span id="togglePassword" class="toggle-password">👁️</span>
+            </div>
+
+            <label for="confirmPassword">Подтвердите пароль:</label>
+            <div class="password-container">
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <span id="toggleConfirmPassword" class="toggle-password">👁️</span>
+            </div>
+
+            <label for="gender">Пол:</label>
+            <select id="gender" name="gender" required>
+                <option value="мужской">Мужской</option>
+                <option value="женский">Женский</option>
+            </select>
+
+            <label for="terms">
+                <input type="checkbox" id="terms" name="terms" required> Я соглашаюсь с условиями обработки данных
+            </label>
+
+            <button type="submit">Отправить</button>
+        </form>
+        <div id="message" class="hidden">Данные успешно отправлены!</div>
+        <div id="result"></div>
+    </div>
+    <script src="my.js"></script>
+</body>
+</html>
