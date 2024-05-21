@@ -1,29 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
     const registrationForm = document.getElementById('registrationForm');
-    const message = document.getElementById('message');
-    const output = document.getElementById('result');
+    const countdownDiv = document.getElementById('countdown');
+    const resultDiv = document.getElementById('result');
     const togglePassword = document.getElementById('togglePassword');
     const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
     const password = document.getElementById('password');
     const confirmPassword = document.getElementById('confirmPassword');
 
-    // функция для проверки типа пароля, если тип password, тогда меняет на текст 
-    function togglePasswordVisibility(input, toggleIcon) {
-        if (input.type === 'password') {
-            input.type = 'text';
-            toggleIcon.textContent = '👁️‍🗨️';
-        } else {
-            input.type = 'password';
-            toggleIcon.textContent = '👁️';
-        }
-    }
-
-    // событие по клику переключать пароль видимый/невидимый
+    // событие по click  пароль переключать на  видимый/невидимый
     togglePassword.addEventListener('click', () => {
         togglePasswordVisibility(password, togglePassword);
     });
 
-    // событие по клику переключать подтверждения пароля видимый/невидимый
+    // событие по click переключать подтверждения пароля на  видимый/невидимый
     toggleConfirmPassword.addEventListener('click', () => {
         togglePasswordVisibility(confirmPassword, toggleConfirmPassword);
     });
@@ -44,24 +33,49 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // проверка чекбокса согласия с условиями
+        // проверка cheackbox согласия с условиями
         if (!terms) {
             alert('Необходимо согласиться с условиями');
             return;
         }
         
-        // таймер для скрытия сообщения через 5 секунды
-        message.classList.remove('hidden');
-        setTimeout(() => {
-            message.classList.add('hidden');
-        }, 5000);
+        // переменные для хранения данных
+        localStorage.setItem('username', username);
+        localStorage.setItem('password', password);
+        localStorage.setItem('gender', gender);
 
-        // вывод данных на странице
-        output.innerHTML = `
-            <h3>Введенные данные:</h3>
-            <p>Имя пользователя: ${username}</p>
-            <p>Пароль: ${password}</p>
-            <p>Пол: ${gender === 'male' ? 'Мужской' : 'Женский'}</p>
-        `;
+        // вызов функции обратного отсчета
+        startCountdown();
+
     });
+
+    // функция обратного отсчета
+    function startCountdown() {
+        let countdown = 5;
+        countdownDiv.style.display = 'block';
+        countdownDiv.textContent = `Информация будет через: ${countdown} секунд`;
+
+        const interval = setInterval(() => {
+            countdown--;
+            countdownDiv.textContent = `Информация будет через: ${countdown} секунд`;
+            if (countdown <= 0) {
+                clearInterval(interval);
+                displayResult();
+            }
+        }, 1000);
+    }
+
+    // функция для отображения результата
+    function displayResult() {
+        const username = localStorage.getItem('username');
+        const password = localStorage.getItem('password');
+        const gender = localStorage.getItem('gender');
+
+        document.getElementById('resultUsername').textContent = username;
+        document.getElementById('resultPassword').textContent = password;
+        document.getElementById('resultGender').textContent = gender;
+
+        countdownDiv.style.display = 'none';
+        resultDiv.style.display = 'block';
+    }
 });
